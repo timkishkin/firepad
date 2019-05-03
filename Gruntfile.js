@@ -124,7 +124,20 @@ module.exports = function (grunt) {
         autowatch: false,
         singleRun: true
       }
-    }
+    },
+    
+    babel: {
+            options: {
+                sourceMap: true,
+                presets: ['babel-preset-es2015-script'],
+                sourceType: "script"
+            },
+            dist: {
+                files: {
+                    'dist/firepad.js': 'dist/firepad.js'
+                }
+            }
+        }
   });
 
   grunt.loadNpmTasks('grunt-coffeelint');
@@ -134,9 +147,10 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-karma');
+  grunt.loadNpmTasks('grunt-babel');
 
   // Tasks
   grunt.registerTask('test', ['karma:unit']);
-  grunt.registerTask('build', ['coffeelint', 'coffee', 'concat', 'uglify', 'copy'])
+  grunt.registerTask('build', ['coffeelint', 'coffee', 'concat', 'babel', 'uglify', 'copy'])
   grunt.registerTask('default', ['build', 'test']);
 };
